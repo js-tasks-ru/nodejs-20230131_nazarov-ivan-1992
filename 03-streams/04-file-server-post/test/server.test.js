@@ -17,8 +17,11 @@ describe('streams/file-server-post', () => {
     after((done) => {
       fse.emptyDirSync(filesFolder);
       fse.writeFileSync(path.join(filesFolder, '.gitkeep'), '');
-      server.close(done);
-    });
+      server.close((err) => {
+        console.log(err)
+        done();
+        });
+      })
 
     beforeEach(() => {
       fse.emptyDirSync(filesFolder);
@@ -70,6 +73,8 @@ describe('streams/file-server-post', () => {
         request.on('error', done);
         request.end();
       });
+
+
 
       it('при попытке создания слишком большого файла - ошибка 413', (done) => {
         const request = http.request(
