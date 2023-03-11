@@ -6,6 +6,10 @@ module.exports.productsBySubcategory = async function productsBySubcategory(ctx,
   const { subcategory } = ctx.query;
 
   if (!subcategory) return next();
+  if (!mongoose.isValidObjectId(subcategory)) {
+    ctx.throw(400, 'Invalid ObjectId');
+  }
+
   let products = await Product.find({ subcategory: subcategory });
   products = products.map(el => mapProduct(el))
   ctx.body = { products };
