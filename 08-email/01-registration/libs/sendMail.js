@@ -47,6 +47,7 @@ module.exports = async function sendMail(options) {
 
   const message = {
     html: juice(html),
+    from: config.mailer.user,
     to: {
       address: options.to,
     },
