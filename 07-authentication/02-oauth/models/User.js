@@ -56,6 +56,9 @@ function generateSalt() {
   });
 }
 
+
+userSchema.methods.generateSalt = generateSalt;
+
 userSchema.methods.setPassword = async function setPassword(password) {
   this.salt = await generateSalt();
   this.passwordHash = await generatePassword(this.salt, password);
